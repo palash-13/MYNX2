@@ -1,0 +1,21 @@
+{
+   "production": [
+        {
+              "id":"1",
+              "name":"Manish Mehto",
+              "vitals":"neck injury"
+    
+        },
+        {
+            "id":"2",
+            "name":"Joseph",
+            "vitals":"shoulder injury"
+        },
+        {
+            "id":"3",
+            "name":"John",
+            "vitals":"legs injury"
+        }
+    
+    ]
+}
