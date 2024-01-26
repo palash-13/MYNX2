@@ -10,8 +10,8 @@ const SpeechRecognitionComponent = () => {
     ? window.speechSynthesis
     : null;
   const { SpeechSynthesisUtterance } = window;
-  const authToken = 'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W3siYXV0aG9yaXR5IjoiQWRtaW4ifV0sInN1YiI6IjE1ZDkyMDYwLS1mZDUyLS00MzliLWEzOGMtNTM2OGQxNWFiMWJjIiwiaWF0IjoxNzA2MDExNzU1LCJleHAiOjE3MDYwMTg5NTV9.N-yE8ABdQYRB8fecK4hHKQ8FfdfLM2WdfzBa1FmDZNzgIR55H1geRN5zbUv1ho4f0VwgVBhwE3lXzQhJtZX49g';
-  const updateSpeechUtterance0 = (speechutterance, integerValue) => {
+  const authToken = 'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W3siYXV0aG9yaXR5IjoiQWRtaW4ifV0sInN1YiI6IjE1ZDkyMDYwLS1mZDUyLS00MzliLWEzOGMtNTM2OGQxNWFiMWJjIiwiaWF0IjoxNzA2MzAxOTIwLCJleHAiOjE3MDYzMDkxMjB9.UJtL6SX9asGXvnWHWEOKPmKjEFqrWc8LSIAhmalVX4ZM89YkNFdFjTvzj7gLuaqyogWU9xXEzbvV6xPkKTsoOA';
+  const utterSpeech =(speechutterance,updatedText)=>{
     const voices = speechSynthesis.getVoices();
     function isFemaleVoice(voice) {
       return voice.name.includes("Female");
@@ -28,149 +28,9 @@ const SpeechRecognitionComponent = () => {
     } else {
       console.warn("Female voice not found. Using default voice.");
     }
-    const updatedText = `Today, the clinic have a total of ${integerValue} appointment`;
     speechutterance.text = updatedText;
     setResp(updatedText);
-  };
-  const updateSpeechUtterance1 = (speechutterance, integerValue) => {
-    const voices = speechSynthesis.getVoices();
-    function isFemaleVoice(voice) {
-      return voice.name.includes("Female");
-    }
-
-    const femaleVoice = voices.find(isFemaleVoice);
-
-    if (femaleVoice) {
-      speechutterance.voice = femaleVoice;
-      speechutterance.lang = femaleVoice.lang;
-      speechutterance.volume = 1;
-      speechutterance.pitch = 1;
-      speechutterance.rate = 1;
-    } else {
-      console.warn("Female voice not found. Using default voice.");
-    }
-    const updatedText = `today ${integerValue} got reschedule`;
-    // const updatedText = integerValue;
-    speechutterance.text = updatedText;
-    // Set the response in the state
-    setResp(updatedText);
-  };
-  const updateSpeechUtterance2 = (speechutterance, integerValue) => {
-    const voices = speechSynthesis.getVoices();
-    function isFemaleVoice(voice) {
-      return voice.name.includes("Female");
-    }
-
-    const femaleVoice = voices.find(isFemaleVoice);
-
-    if (femaleVoice) {
-      speechutterance.voice = femaleVoice;
-      speechutterance.lang = femaleVoice.lang;
-      speechutterance.volume = 1;
-      speechutterance.pitch = 1;
-      speechutterance.rate = 1;
-    } else {
-      console.warn("Female voice not found. Using default voice.");
-    }
-    const updatedText = `The ${integerValue} appointments got cancelled`;
-    // const updatedText = integerValue;
-    speechutterance.text = updatedText;
-    // Set the response in the state
-    setResp(updatedText);
-  };
-  const updateSpeechUtterance3 = (speechutterance, integerValue) => {
-    const voices = speechSynthesis.getVoices();
-    function isFemaleVoice(voice) {
-      return voice.name.includes("Female");
-    }
-
-    const femaleVoice = voices.find(isFemaleVoice);
-
-    if (femaleVoice) {
-      speechutterance.voice = femaleVoice;
-      speechutterance.lang = femaleVoice.lang;
-      speechutterance.volume = 1;
-      speechutterance.pitch = 1;
-      speechutterance.rate = 1;
-    } else {
-      console.warn("Female voice not found. Using default voice.");
-    }
-    const updatedText = `Today there were ${integerValue} no show appointments`;
-    // const updatedText = integerValue;
-    speechutterance.text = updatedText;
-
-    // Set the response in the state
-    setResp(updatedText);
-  };
-  const updateSpeechUtterance = (speechutterance, integerValue) => {
-    const voices = speechSynthesis.getVoices();
-    function isFemaleVoice(voice) {
-      return voice.name.includes("Female");
-    }
-
-    const femaleVoice = voices.find(isFemaleVoice);
-
-    if (femaleVoice) {
-      speechutterance.voice = femaleVoice;
-      speechutterance.lang = femaleVoice.lang;
-      speechutterance.volume = 1;
-      speechutterance.pitch = 1;
-      speechutterance.rate = 1;
-    } else {
-      console.warn("Female voice not found. Using default voice.");
-    }
-    const updatedText = `Today for doctor vb raj ${integerValue} appointments got cancelled`;
-    // const updatedText = integerValue;
-    speechutterance.text = updatedText;
-    // Set the response in the state
-    setResp(updatedText);
-  };
-  const updateSpeechUtterance5 = (speechutterance, integerValue) => {
-    const voices = speechSynthesis.getVoices();
-    function isFemaleVoice(voice) {
-      return voice.name.includes("Female");
-    }
-
-    const femaleVoice = voices.find(isFemaleVoice);
-
-    if (femaleVoice) {
-      speechutterance.voice = femaleVoice;
-      speechutterance.lang = femaleVoice.lang;
-      speechutterance.volume = 1;
-      speechutterance.pitch = 1;
-      speechutterance.rate = 1;
-    } else {
-      console.warn("Female voice not found. Using default voice.");
-    }
-    const updatedText = `Today for doctor jacquline rush ${integerValue} got reschedule`;
-    // const updatedText = integerValue;
-    speechutterance.text = updatedText;
-    // Set the response in the state
-    setResp(updatedText);
-  };
-  const updateSpeechUtterance6 = (speechutterance, integerValue) => {
-    const voices = speechSynthesis.getVoices();
-    function isFemaleVoice(voice) {
-      return voice.name.includes("Female");
-    }
-
-    const femaleVoice = voices.find(isFemaleVoice);
-
-    if (femaleVoice) {
-      speechutterance.voice = femaleVoice;
-      speechutterance.lang = femaleVoice.lang;
-      speechutterance.volume = 1;
-      speechutterance.pitch = 1;
-      speechutterance.rate = 1;
-    } else {
-      console.warn("Female voice not found. Using default voice.");
-    }
-    const updatedText = `today for doc jahid niaz has ${integerValue} no show`;
-    // const updatedText = integerValue;
-    speechutterance.text = updatedText;
-    // Set the response in the state
-    setResp(updatedText);
-  };
+  }
   const callApiAndGetInteger0 = () => {
     const speechutterance = new SpeechSynthesisUtterance();
     const currentDate = getFormattedDate();
@@ -198,7 +58,8 @@ const SpeechRecognitionComponent = () => {
         } else {
           speechutterance.text = `The Value is: ${integerValue}`;
         }
-        updateSpeechUtterance0(speechutterance, integerValue);
+        const updatedText = `Today, the clinic have a total of ${integerValue} appointment`;
+        utterSpeech(speechutterance, updatedText);
         speechSynthesis.speak(speechutterance);
       })
       .catch((error) => {
@@ -208,6 +69,7 @@ const SpeechRecognitionComponent = () => {
   const callApiAndGetInteger1 = () => {
     const speechutterance = new SpeechSynthesisUtterance();
     const currentDate = getFormattedDate();
+
     const apiUrl = `http://52.14.102.183:8096/reporting/getCountOfRescheduledAppointment/${currentDate}`;
     fetch(apiUrl, {
       headers: {
@@ -225,58 +87,53 @@ const SpeechRecognitionComponent = () => {
         if (isNaN(integerValue)) {
           throw new Error("Value is not a valid integer");
         }
-
         if (integerValue > 10) {
           speechutterance.text = `The Value is: ${integerValue}`;
         } else {
           speechutterance.text = `The Value is: ${integerValue}`;
         }
-        updateSpeechUtterance1(speechutterance, integerValue);
+        const updatedText = `today ${integerValue} appointments got reschedule`;
+        utterSpeech(speechutterance, updatedText);
         speechSynthesis.speak(speechutterance);
       })
       .catch((error) => {
         console.error("There was an error with this request:", error);
       });
   };
+  // const callApiAndGetInteger2 = () => {
+  //   const speechutterance = new SpeechSynthesisUtterance();
+  //   const currentDate = getFormattedDate();
+  //   const apiUrl =
+  //     `http://52.14.102.183:8096/reporting/getCountOfAppointment/${currentDate}`;
+  //   fetch(apiUrl, {
+  //     headers: {
+  //       Authorization: `Bearer ${authToken}`,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not okay");
+  //       }
+  //       return response.text();
+  //     })
+  //     .then((longValue) => {
+  //       const integerValue = parseInt(longValue, 10);
+  //       if (isNaN(integerValue)) {
+  //         throw new Error("Value is not a valid integer");
+  //       }
 
-  const callApiAndGetInteger2 = () => {
-    const speechutterance = new SpeechSynthesisUtterance();
-    const currentDate = getFormattedDate();
-    const apiUrl =
-      `http://52.14.102.183:8096/reporting/getCountOfAppointment/${currentDate}`;
-
-    // const authToken =
-    //   "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W3siYXV0aG9yaXR5IjoiQWRtaW4ifV0sInN1YiI6IjE1ZDkyMDYwLS1mZDUyLS00MzliLWEzOGMtNTM2OGQxNWFiMWJjIiwiaWF0IjoxNzA1Njc4NzU3LCJleHAiOjE3MDU2ODU5NTd9.s3pyaOXmkMBFAFCR0CwC4QEUMGDndOY01xoXwQyxIM3mbUUn1U0g11-6ReneF0iZf0QfmTdGqlW7-VuQFQjcNg";
-
-    fetch(apiUrl, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not okay");
-        }
-        return response.text();
-      })
-      .then((longValue) => {
-        const integerValue = parseInt(longValue, 10);
-        if (isNaN(integerValue)) {
-          throw new Error("Value is not a valid integer");
-        }
-
-        if (integerValue > 10) {
-          speechutterance.text = `The Value is: ${integerValue}`;
-        } else {
-          speechutterance.text = `The Value is: ${integerValue}`;
-        }
-        updateSpeechUtterance2(speechutterance, integerValue);
-        speechSynthesis.speak(speechutterance);
-      })
-      .catch((error) => {
-        console.error("There was an error with this request:", error);
-      });
-  };
+  //       if (integerValue > 10) {
+  //         speechutterance.text = `The Value is: ${integerValue}`;
+  //       } else {
+  //         speechutterance.text = `The Value is: ${integerValue}`;
+  //       }
+  //       updateSpeechUtterance2(speechutterance, integerValue);
+  //       speechSynthesis.speak(speechutterance);
+  //     })
+  //     .catch((error) => {
+  //       console.error("There was an error with this request:", error);
+  //     });
+  // };
   const callApiAndGetInteger3 = () => {
     const speechutterance = new SpeechSynthesisUtterance();
     const currentDate = getFormattedDate();
@@ -304,7 +161,8 @@ const SpeechRecognitionComponent = () => {
         } else {
           speechutterance.text = `The Value is: ${integerValue}`;
         }
-        updateSpeechUtterance3(speechutterance, integerValue);
+        const updatedText = `Today there were ${integerValue} no show appointments`;
+        utterSpeech(speechutterance, updatedText);
         speechSynthesis.speak(speechutterance);
       })
       .catch((error) => {
@@ -338,7 +196,8 @@ const SpeechRecognitionComponent = () => {
         } else {
           speechutterance.text = `The Value is: ${integerValue}`;
         }
-        updateSpeechUtterance2(speechutterance, integerValue);
+        const updatedText= `The ${integerValue} appointments got cancelled`
+        utterSpeech(speechutterance,updatedText);
         speechSynthesis.speak(speechutterance);
       })
       .catch((error) => {
@@ -346,7 +205,7 @@ const SpeechRecognitionComponent = () => {
       });
   };
   const callApiAndGetInteger = () => {
-    const speechUtterance = new SpeechSynthesisUtterance();
+    const speechutterance = new SpeechSynthesisUtterance();
     const apiUrlProviders =
       "http://52.14.102.183:8096/reporting/getProvidersMap";
     fetch(apiUrlProviders, {
@@ -365,23 +224,16 @@ const SpeechRecognitionComponent = () => {
         const nameToFind = "VB Raj";
         const findKeyByValue = (obj, valueToFind) => {
           for (let key in obj) {
-            console.log(arrayFromJSON[key]);
             if (obj[key] === valueToFind) {
               return key;
             }
           }
           return null;
         };
-
         const providerid = findKeyByValue(arrayFromJSON, nameToFind);
-        console.log(providerid);
-
-        console.log(`This is a provider id ${providerid}`);
         if (providerid) {
-          console.log(providerid);
           const currentDate = getFormattedDate();
           const apiUrlProviders = `http://52.14.102.183:8096/reporting/getCountOfCancelledAppointmentByProviderId/${providerid}/${currentDate}`;
-          console.log(apiUrlProviders);
           const speechutterance = new SpeechSynthesisUtterance();
 
           fetch(apiUrlProviders, {
@@ -406,7 +258,8 @@ const SpeechRecognitionComponent = () => {
               } else {
                 speechutterance.text = `The Value is: ${integerValue}`;
               }
-              updateSpeechUtterance(speechutterance, integerValue);
+              const updatedText = `Today for doctor vb raj ${integerValue} appointments got cancelled`;
+              utterSpeech(speechutterance, updatedText)
               speechSynthesis.speak(speechutterance);
             })
             .catch((error) => {
@@ -434,7 +287,6 @@ const SpeechRecognitionComponent = () => {
         const nameToFind = "JACQUELYN RUSH";
         const findKeyByValue = (obj, valueToFind) => {
           for (let key in obj) {
-            console.log(arrayFromJSON[key]);
             if (obj[key] === valueToFind) {
               return key;
             }
@@ -443,15 +295,9 @@ const SpeechRecognitionComponent = () => {
         };
 
         const providerid = findKeyByValue(arrayFromJSON, nameToFind);
-        console.log(providerid);
-
-        console.log(`This is a provider id ${providerid}`);
         if (providerid) {
-          console.log(providerid);
           const currentDate = getFormattedDate();
           const apiUrlProviders = `http://52.14.102.183:8096/reporting/getCountOfRescheduledAppointment/${providerid}/${currentDate}`;
-          console.log(apiUrlProviders);
-
           fetch(apiUrlProviders, {
             headers: {
               Authorization: `Bearer ${authToken}`,
@@ -474,7 +320,8 @@ const SpeechRecognitionComponent = () => {
               } else {
                 speechUtterance.text = `The Value is: ${integerValue}`;
               }
-              updateSpeechUtterance5(speechUtterance, integerValue);
+              const updatedText = `Today for doctor jacquline rush ${integerValue} got reschedule`;
+              utterSpeech(speechUtterance, updatedText);
               speechSynthesis.speak(speechUtterance);
             })
             .catch((error) => {
@@ -483,7 +330,7 @@ const SpeechRecognitionComponent = () => {
         }
       });
   };
-  const callApiAndGetInteger6 = () => {
+  const callApiAndGetInteger6 = (wordsAfterDoctor) => {
     const speechUtterance = new SpeechSynthesisUtterance();
     const apiUrlProviders =
       "http://52.14.102.183:8096/reporting/getProvidersMap";
@@ -499,24 +346,24 @@ const SpeechRecognitionComponent = () => {
         return response.json(); 
       })
       .then((arrayFromJSON) => {
-        const nameToFind = "Jahid Niaz";
+        const nameToFind = wordsAfterDoctor;
         const findKeyByValue = (obj, valueToFind) => {
           for (let key in obj) {
-            console.log(arrayFromJSON[key]);
-            if (obj[key] === valueToFind) {
+            
+            const providerWithoutSpaces = obj[key].split('').filter(e => e.trim().length).join('');
+            
+            const providerToFind = valueToFind.split('').filter(e => e.trim().length).join('');
+            if (providerWithoutSpaces.toLowerCase() === providerToFind.toLowerCase() ) {
+              
               return key;
             }
           }
           return null;
         };
         const providerid = findKeyByValue(arrayFromJSON, nameToFind);
-        console.log(providerid);
-        console.log(`This is a provider id ${providerid}`);
         if (providerid) {
-          console.log(providerid);
           const currentDate = getFormattedDate();
           const apiUrlProviders = `http://52.14.102.183:8096/reporting/getCountOfNoShowAppointment/${providerid}/${currentDate}`;
-          console.log(apiUrlProviders);
           fetch(apiUrlProviders, {
             headers: {
               Authorization: `Bearer ${authToken}`,
@@ -539,7 +386,8 @@ const SpeechRecognitionComponent = () => {
               } else {
                 speechUtterance.text = `The Value is: ${integerValue}`;
               }
-              updateSpeechUtterance6(speechUtterance, integerValue);
+              const updatedText = `today for ${wordsAfterDoctor} has ${integerValue} no show`;
+              utterSpeech(speechUtterance, updatedText);
               speechSynthesis.speak(speechUtterance);
             })
             .catch((error) => {
@@ -553,7 +401,6 @@ const SpeechRecognitionComponent = () => {
       console.error("Speech synthesis is not available in this browser.");
       return;
     }
-
     const speechutterance = new SpeechSynthesisUtterance();
     const voices = speechSynthesis.getVoices();
 
@@ -577,6 +424,16 @@ const SpeechRecognitionComponent = () => {
 
     if (voices.length > voiceIndex) {
       speechutterance.voice = voices[voiceIndex];
+      function extractWordsAfterKeyword(word, keyword) {
+        const keywordIndex = word.toLowerCase().indexOf(keyword);
+        
+        if (keywordIndex !== -1) {
+          const wordsAfterKeyword = word.substring(keywordIndex + keyword.length).trim();
+          return wordsAfterKeyword;
+        } else {
+          return null; 
+        }
+      }
       if (
         word.toLowerCase().includes("page") &&
         word.toLowerCase().includes("ap")
@@ -595,15 +452,18 @@ const SpeechRecognitionComponent = () => {
         callApiAndGetInteger1();
       } else if (
         word.toLowerCase().includes("vb") &&
-        word.toLowerCase().includes("raj")
+        word.toLowerCase().includes("raj") &&
+        word.toLowerCase().includes("cancelled")
       ) {
         callApiAndGetInteger();
-      } else if (
-        word.toLowerCase().includes("no") &&
-        word.toLowerCase().includes("show")&&word.toLowerCase().includes("appointment")
-      ) {
-        callApiAndGetInteger3();////////
-      } else if (
+      }
+      //  else if (
+      //   word.toLowerCase().includes("no") &&
+      //   word.toLowerCase().includes("show")&&word.toLowerCase().includes("appointment")
+      // ) {
+      //   callApiAndGetInteger3();////////
+      // }
+       else if (
         word.toLowerCase().includes("cancelled") &&
         word.toLowerCase().includes("today")
       ) {
@@ -614,17 +474,36 @@ const SpeechRecognitionComponent = () => {
       ) {
         callApiAndGetInteger5();
       } else if (
-        word.toLowerCase().includes("jahid") && word.toLowerCase().includes("niaz")
+        word.toLowerCase().includes("no") && word.toLowerCase().includes("show")
+        && word.toLowerCase().includes("doctor")
       ) {
-        callApiAndGetInteger6();
-      } else if (
+        const wordsAfterDoctor = extractWordsAfterKeyword(word, "doctor");
+   
+        if (wordsAfterDoctor) {
+        
+          callApiAndGetInteger6(wordsAfterDoctor);
+        }
+        // callApiAndGetInteger6();
+      }
+      else if (
+        word.toLowerCase().includes("no") && word.toLowerCase().includes("show")
+        && word.toLowerCase().includes("dr")
+      ) {
+        const wordsAfterDoctor = extractWordsAfterKeyword(word, "dr");
+        
+        if (wordsAfterDoctor) {
+         
+          callApiAndGetInteger6(wordsAfterDoctor);
+        }
+        // callApiAndGetInteger6();
+      }
+      else if (
         word.toLowerCase().includes("appointments") &&
         word.toLowerCase().includes("today")
       ) {
         speechutterance.text = " You have 0 appointments got today.";
       }
     }
-
     updateSpeechUtterance();
     setResp(speechutterance.text);
     speechSynthesis.speak(speechutterance);
