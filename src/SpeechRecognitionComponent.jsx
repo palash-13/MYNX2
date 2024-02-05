@@ -1,8 +1,6 @@
 import React, {useState } from "react";
 import startListening from "./helpers/startlistening";
 import { getFormattedDate } from "./helpers/getFormattedDate";
-
-
 const SpeechRecognitionComponent = () => {
   const [transcript, setTranscript] = useState("");
   const [resp, setResp] = useState("");
@@ -11,9 +9,51 @@ const SpeechRecognitionComponent = () => {
     ? window.speechSynthesis
     : null;
   const { SpeechSynthesisUtterance } = window;
-  const authToken = 'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W3siYXV0aG9yaXR5IjoiQWRtaW4ifV0sInN1YiI6IjE1ZDkyMDYwLS1mZDUyLS00MzliLWEzOGMtNTM2OGQxNWFiMWJjIiwiaWF0IjoxNzA2NDMyOTIxLCJleHAiOjE3MDY0NDAxMjF9.-3pwqdxmFwHid3ok_WRFM1kDzB5FRE4qjYzHt4hfPDpuhu1KqzIdWocHnpDMbJ6YE4Bz8EHYVg2snN-uXnJSFg';
+  const authToken = 'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W3siYXV0aG9yaXR5IjoiQWRtaW4ifV0sInN1YiI6IjRmY2NhNjdlLS1iZjhmLS00ZTBjLWE3NDUtYjA0NmM1NzZhNDJiIiwiaWF0IjoxNzA3MTQ0MDc0LCJleHAiOjE3MDcxNTEyNzR9.0V3174Wq8ihwLMLba51vmgH4ND-I1FaTpSJCMVRZnTaNGyoV7fzsuPjqOv3xmhit9w_tOkhOU8EpL9vvT3lsow';
   const speechutterance = new SpeechSynthesisUtterance();
   const currentDate = getFormattedDate();
+  const fetchProviderMapAndFindId = (wordsAfterDoctor, callback) => {
+    const apiUrlProviders =
+      "http://34.192.164.68:8096/reporting/getProvidersMap";
+    fetch(apiUrlProviders, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not okay");
+        }
+        return response.json();
+      })
+      .then((arrayFromJSON) => {
+        const nameToFind = wordsAfterDoctor;
+        const findKeyByValue = (obj, valueToFind) => {
+          for (let key in obj) {
+            const providerWithoutSpaces = obj[key]
+              .split("")
+              .filter((e) => e.trim().length)
+              .join("");
+  
+            const providerToFind = valueToFind
+              .split("")
+              .filter((e) => e.trim().length)
+              .join("");
+            if (providerWithoutSpaces.toLowerCase() === providerToFind.toLowerCase()) {
+              return key;
+            }
+          }
+          return null;
+        };
+  
+        const providerId = findKeyByValue(arrayFromJSON, nameToFind);
+        callback(providerId);
+      })
+      .catch((error) => {
+        console.error("Error fetching provider map:", error);
+        callback(null); // Notify callback function about the failure
+      });
+  };
   const utterSpeech =(speechutterance,updatedText)=>{
     const voices = speechSynthesis.getVoices();
     function isFemaleVoice(voice) {
@@ -62,143 +102,60 @@ const SpeechRecognitionComponent = () => {
     });
   };
   const getClinical = () => {
-  const apiUrl = `http://52.14.102.183:8096/reporting/getCountOfAppointment/${currentDate}`;
+  const apiUrl = `http://34.192.164.68:8096/reporting/getCountOfAppointment/${currentDate}`;
   fetchData(apiUrl, (integerValue) => {
     return `Today, the clinic have a total of ${integerValue} appointment`;
   });
   };
   const getRescheduled = () => {
-    const apiUrl = `http://52.14.102.183:8096/reporting/getCountOfRescheduledAppointment/${currentDate}`;
+    const apiUrl = `http://34.192.164.68:8096/reporting/getCountOfRescheduledAppointment/${currentDate}`;
     fetchData(apiUrl, (integerValue) => {
       return `today ${integerValue} appointments got reschedule`;
     });
   };
   const getNoShow = () => {
     const apiUrl =
-     `http://52.14.102.183:8096/reporting/getCountOfNoShowAppointment/${currentDate}`;
+     `http://34.192.164.68:8096/reporting/getCountOfNoShowAppointment/${currentDate}`;
      fetchData(apiUrl, (integerValue) => {
       return `Today there were ${integerValue} no show appointments`;
     });
   };
   const getCancelled = () => {
     const apiUrl =
-      `http://52.14.102.183:8096/reporting/getCountOfCancelledAppointment/${currentDate}`;
+      `http://34.192.164.68:8096/getCountOfCancelledAppointment/${currentDate}`;
       fetchData(apiUrl, (integerValue) => {
         return `The ${integerValue} appointments got cancelled`;
       });
   };
   const getDoctorCancelled = (wordsAfterDoctor) => {
-    const apiUrlProviders =
-      "http://52.14.102.183:8096/reporting/getProvidersMap";
-    fetch(apiUrlProviders, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not okay");
-        }
-        return response.json(); 
-      })
-      .then((arrayFromJSON) => {
-        const nameToFind = wordsAfterDoctor;
-        const findKeyByValue = (obj, valueToFind) => {
-          for (let key in obj) {
-            const providerWithoutSpaces = obj[key].split('').filter(e => e.trim().length).join('');
-            
-            const providerToFind = valueToFind.split('').filter(e => e.trim().length).join('');
-            if (providerWithoutSpaces.toLowerCase() === providerToFind.toLowerCase() ) {
-              
-              return key;
-            }
-          }
-          return null;
-        };
-        const providerid = findKeyByValue(arrayFromJSON, nameToFind);
-        if (providerid) {
-          const apiUrl = `http://52.14.102.183:8096/reporting/getCountOfCancelledAppointmentByProviderId/${providerid}/${currentDate}`;
-          fetchData(apiUrl, (integerValue) => {
-            return `Today for doctor ${wordsAfterDoctor} has ${integerValue} appointments got cancelled`;
-          });
-        }
-      });
+    fetchProviderMapAndFindId(wordsAfterDoctor, (providerId) => {
+      if (providerId) {
+        const apiUrl = `http://34.192.164.68:8096/reporting/getCountOfCancelledAppointmentByProviderId/${providerId}/${currentDate}`;
+        fetchData(apiUrl, (integerValue) => {
+          return `Today for doctor ${wordsAfterDoctor} has ${integerValue} appointments got cancelled`;
+        });
+      }
+    });
   };
   const getDoctorRescheduled = (wordsAfterDoctor) => {
-    const apiUrlProviders =
-      "http://52.14.102.183:8096/reporting/getProvidersMap";
-    fetch(apiUrlProviders, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not okay");
-        }
-        return response.json(); 
-      })
-      .then((arrayFromJSON) => {
-        const nameToFind = wordsAfterDoctor;
-        const findKeyByValue = (obj, valueToFind) => {
-          for (let key in obj) {
-            const providerWithoutSpaces = obj[key].split('').filter(e => e.trim().length).join('');
-            
-            const providerToFind = valueToFind.split('').filter(e => e.trim().length).join('');
-            if (providerWithoutSpaces.toLowerCase() === providerToFind.toLowerCase() ) {
-              
-              return key;
-            }
-          }
-          return null;
-        };
-
-        const providerid = findKeyByValue(arrayFromJSON, nameToFind);
-        if (providerid) {
-          const apiUrl = `http://52.14.102.183:8096/reporting/getCountOfRescheduledAppointment/${providerid}/${currentDate}`;
-          fetchData(apiUrl, (integerValue) => {
-            return `Today, the clinic have a total of ${integerValue} appointment`;
-          });
-        }
-      });
+    fetchProviderMapAndFindId(wordsAfterDoctor, (providerId) => {
+      if (providerId) {
+        const apiUrl = `http://34.192.164.68:8096/reporting/getCountOfRescheduledAppointment/${providerId}/${currentDate}`;
+        fetchData(apiUrl, (integerValue) => {
+          return `Today, the clinic have a total of ${integerValue} appointment`;
+        });
+      }
+    });
   };
   const getDoctorNoShow = (wordsAfterDoctor) => {
-    const apiUrlProviders =
-      "http://52.14.102.183:8096/reporting/getProvidersMap";
-    fetch(apiUrlProviders, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not okay");
-        }
-        return response.json(); 
-      })
-      .then((arrayFromJSON) => {
-        const nameToFind = wordsAfterDoctor;
-        const findKeyByValue = (obj, valueToFind) => {
-          for (let key in obj) {
-            
-            const providerWithoutSpaces = obj[key].split('').filter(e => e.trim().length).join('');
-            
-            const providerToFind = valueToFind.split('').filter(e => e.trim().length).join('');
-            if (providerWithoutSpaces.toLowerCase() === providerToFind.toLowerCase() ) {
-              
-              return key;
-            }
-          }
-          return null;
-        };
-        const providerid = findKeyByValue(arrayFromJSON, nameToFind);
-        if (providerid) {
-          const apiUrl = `http://52.14.102.183:8096/reporting/getCountOfNoShowAppointment/${providerid}/${currentDate}`;
-          fetchData(apiUrl, (integerValue) => {
-            return `today for ${wordsAfterDoctor} has ${integerValue} no show`;
-          });
-        }
-      });
+    fetchProviderMapAndFindId(wordsAfterDoctor, (providerId) => {
+      if (providerId) {
+        const apiUrl = `http://34.192.164.68:8096/reporting/getCountOfNoShowAppointment/${providerId}/${currentDate}`;
+        fetchData(apiUrl, (integerValue) => {
+          return `Today for ${wordsAfterDoctor} has ${integerValue} no show`;
+        });
+      }
+    });
   };
   const handleSpeak = async (word, voiceIndex = 0) => {
     if (!speechSynthesis) {
@@ -259,9 +216,7 @@ const SpeechRecognitionComponent = () => {
         word.toLowerCase().includes("doctor")
       ) {
         const wordsAfterDoctor = extractWordsAfterKeyword(word, "doctor");
-   
         if (wordsAfterDoctor) {
-        
           getDoctorCancelled(wordsAfterDoctor);
         }
       }
@@ -271,9 +226,7 @@ const SpeechRecognitionComponent = () => {
         word.toLowerCase().includes("dr")
       ) {
         const wordsAfterDoctor = extractWordsAfterKeyword(word, "dr");
-   
         if (wordsAfterDoctor) {
-        
           getDoctorCancelled(wordsAfterDoctor);
         }
       }
@@ -281,7 +234,7 @@ const SpeechRecognitionComponent = () => {
         word.toLowerCase().includes("no") &&
         word.toLowerCase().includes("show")&&word.toLowerCase().includes("appointment")
       ) {
-        getNoShow();////////
+        getNoShow();
       }
        else if (
         word.toLowerCase().includes("cancelled") &&
@@ -304,9 +257,7 @@ const SpeechRecognitionComponent = () => {
         word.toLowerCase().includes("dr")
       ) {
         const wordsAfterDoctor = extractWordsAfterKeyword(word, "dr");
-   
         if (wordsAfterDoctor) {
-        
           getDoctorRescheduled(wordsAfterDoctor);
         }
       }
@@ -315,24 +266,18 @@ const SpeechRecognitionComponent = () => {
         && word.toLowerCase().includes("doctor")
       ) {
         const wordsAfterDoctor = extractWordsAfterKeyword(word, "doctor");
-   
         if (wordsAfterDoctor) {
-        
           getDoctorNoShow(wordsAfterDoctor);
         }
-        // callApiAndGetInteger6();
       }
       else if (
         word.toLowerCase().includes("no") && word.toLowerCase().includes("show")
         && word.toLowerCase().includes("dr")
       ) {
         const wordsAfterDoctor = extractWordsAfterKeyword(word, "dr");
-        
         if (wordsAfterDoctor) {
-         
           getDoctorNoShow(wordsAfterDoctor);
         }
-        // callApiAndGetInteger6();
       }
       else if (
         word.toLowerCase().includes("appointments") &&
